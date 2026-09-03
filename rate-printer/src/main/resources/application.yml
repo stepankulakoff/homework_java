@@ -1,0 +1,9 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: rate-printer
+
+currency-rate-provider:
+  url: http://localhost:8080/rpc
