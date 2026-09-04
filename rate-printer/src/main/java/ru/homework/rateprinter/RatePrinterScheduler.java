@@ -16,9 +16,9 @@ public class RatePrinterScheduler {
     private final String providerUrl;
 
     public RatePrinterScheduler(RestTemplate restTemplate,
-                                 @Value("${currency-rate-provider.url}") String providerUrl) {
+                                 @Value("${currency-rate-provider.service-id}") String serviceId) {
         this.restTemplate = restTemplate;
-        this.providerUrl = providerUrl;
+        this.providerUrl = "http://" + serviceId + "/rpc";
     }
 
     @Scheduled(fixedRate = 5000)

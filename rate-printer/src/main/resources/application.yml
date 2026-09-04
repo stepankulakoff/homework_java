@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: rate-printer
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
 
 currency-rate-provider:
-  url: http://localhost:8080/rpc
+  service-id: currency-rate-provider
