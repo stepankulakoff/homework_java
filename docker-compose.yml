@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: pact_broker
+      POSTGRES_USER: pact_broker
+      POSTGRES_PASSWORD: pact_broker
+    ports:
+      - "5433:5432"
+    volumes:
+      - pact-broker-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pact_broker"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+  pact-broker:
+    image: pactfoundation/pact-broker:latest
+    ports:
+      - "9292:9292"
+    environment:
+      PACT_BROKER_DATABASE_URL: postgres://pact_broker:pact_broker@postgres/pact_broker
+      PACT_BROKER_ALLOW_PUBLIC_READ: "true"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pact-broker-postgres:
