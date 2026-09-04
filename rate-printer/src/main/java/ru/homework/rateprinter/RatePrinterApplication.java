@@ -1,5 +1,6 @@
 package ru.homework.rateprinter;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -22,5 +23,11 @@ public class RatePrinterApplication {
     @LoadBalanced
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
+    }
+
+    @Bean
+    public RateProviderClient rateProviderClient(RestTemplate restTemplate,
+                                                   @Value("${currency-rate-provider.service-id}") String serviceId) {
+        return new RateProviderClient(restTemplate, "http://" + serviceId);
     }
 }
