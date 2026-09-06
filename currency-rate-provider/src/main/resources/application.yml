@@ -1,9 +1,11 @@
 server:
   port: ${SERVER_PORT:0}
+  shutdown: graceful
 
 spring:
   application:
     name: currency-rate-provider
-  cloud:
-    zookeeper:
-      connect-string: localhost:2181
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  lifecycle:
+    timeout-per-shutdown-phase: 30s

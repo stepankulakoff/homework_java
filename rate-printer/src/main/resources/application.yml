@@ -1,12 +1,14 @@
 server:
-  port: 8081
+  port: ${SERVER_PORT:8081}
+  shutdown: graceful
 
 spring:
   application:
     name: rate-printer
-  cloud:
-    zookeeper:
-      connect-string: localhost:2181
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
 
 currency-rate-provider:
   service-id: currency-rate-provider
